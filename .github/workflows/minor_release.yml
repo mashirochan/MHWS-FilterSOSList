@@ -1,0 +1,64 @@
+name: Minor Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Extract and increment version
+      id: versioning
+      run: |
+        # Extract current version and name from modinfo.ini
+        current_version=$(grep '^version' modinfo.ini | awk -F '=' '{print $2}' | xargs)
+        name=$(grep '^name' modinfo.ini | awk -F '=' '{print $2}' | xargs)
+        echo "Current version: $current_version"
+        echo "Mod name: $name"
+
+        # Bump minor version and reset patch
+        IFS='.' read -r major minor patch <<< "$current_version"
+        minor=$((minor + 1))
+        patch=0
+        new_version="${major}.${minor}.${patch}"
+
+        # Update modinfo.ini
+        sed -i "s/^version = .*/version = $new_version/" modinfo.ini
+
+        # Format file/release name
+        zipname="${name// /_}_v${new_version}"  # Replace spaces with underscores for the file
+        releasename="${name} v${new_version}"  # Keep original spacing for display
+
+        echo "New version: $new_version"
+        echo "Zip name: $zipname"
+        echo "Release name: $releasename"
+
+        # Set outputs
+        echo "version=$new_version" >> $GITHUB_OUTPUT
+        echo "zipname=$zipname" >> $GITHUB_OUTPUT
+        echo "releasename=$releasename" >> $GITHUB_OUTPUT
+
+    - name: Commit updated version
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add modinfo.ini
+        git commit -m "Bump version to ${{ steps.versioning.outputs.version }}"
+        git push
+
+    - name: Zip selected files
+      run: |
+        zip -r "${{ steps.versioning.outputs.zipname }}.zip" reframework/autorun Cover.png modinfo.ini
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.versioning.outputs.version }}
+        name: ${{ steps.versioning.outputs.releasename }}
+        files: ${{ steps.versioning.outputs.zipname }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
