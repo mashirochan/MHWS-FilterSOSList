@@ -45,13 +45,19 @@ jobs:
     - name: Get Nexus Mod Stats
       id: nexus_stats
       run: |
-        MOD_ID=1220  # Replace with your mod's Nexus Mod ID
-        GAME_ID=6993  # Game ID for Monster Hunter World
+        MOD_ID=1220
+        GAME_NAME=monsterhunterwilds
         API_KEY=${{ secrets.NEXUS_API_KEY }}  # Store your Nexus API key in GitHub secrets
-        DOWNLOADS=$(curl -s -H "Authorization: Bearer $API_KEY" "https://api.nexusmods.com/v1/games/$GAME_ID/mods/$MOD_ID/stats.json" | jq '.stats.downloads')
+        RESPONSE=$(curl -s -H "apikey: $API_KEY" "https://api.nexusmods.com/v1/games/$GAME_NAME/mods/$MOD_ID.json")
 
-        echo "Current download count: $DOWNLOADS"
-        echo "downloads=$DOWNLOADS" >> $GITHUB_OUTPUT
+        # Extract the download count from the response
+        DOWNLOADS=$(echo "$RESPONSE" | jq '.mod_downloads')
+        
+        # Format the download count with commas (e.g., 3539 -> 3,539)
+        FORMATTED_DOWNLOADS=$(printf "%'d" $DOWNLOADS)
+
+        echo "Current download count: $FORMATTED_DOWNLOADS"
+        echo "downloads=$FORMATTED_DOWNLOADS" >> $GITHUB_OUTPUT
 
     - name: Update README with new version and badges
       run: |
