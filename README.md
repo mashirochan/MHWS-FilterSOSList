@@ -1,8 +1,8 @@
 ![Filter SOS List](Cover.png)
 <p align="center">
-  <a href="https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.7.0"><img src="https://img.shields.io/badge/version-1.7.0-ff6262" alt="version" alt="version" alt="version" alt="version"></a>
-  <a href="https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.7.0"><img src="https://img.shields.io/badge/downloads-3,540-ff6262" alt="downloads" alt="downloads" alt="downloads" alt="downloads"></a>
-  <a href="https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.7.0"><img src="https://img.shields.io/badge/compatibility-TU1-limegreen" alt="compatibility"></a>
+  <a href="https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.4.0"><img src="https://img.shields.io/badge/version-1.4.0-ff6262" alt="version" alt="version" alt="version" alt="version" alt="version"></a>
+  <a href="https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.4.0"><img src="https://img.shields.io/badge/downloads-3,544-ff6262" alt="downloads" alt="downloads" alt="downloads" alt="downloads" alt="downloads"></a>
+  <a href="https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.4.0"><img src="https://img.shields.io/badge/compatibility-TU1-limegreen" alt="compatibility"></a>
 </p>
 Filters the SOS list based on various customizable parameters such as desired bonus rewards or the maximum of a reward.
 <br>
@@ -13,7 +13,7 @@ Filters the SOS list based on various customizable parameters such as desired bo
 How to install:
 
 1. Install [REFramework﻿](https://www.nexusmods.com/monsterhunterwilds/mods/93)
-2. Download this mod from the [Releases﻿﻿](https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.7.0) page
+2. Download this mod from the [Releases﻿﻿](https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.4.0) page
 3. Extract this mod from its .zip file
 4. Copy the "reframework" folder into the root directory of your Monster Hunter Wilds game. For Steam users, this will be `C:\Program Files (x86)\Steam\steamapps\common\MonsterHunterWilds\`
 
@@ -33,7 +33,7 @@ Japanese translation provided by [DeepL](https://www.deepl.com/):
 インストール方法:
 
 1. [REFramework](https://www.nexusmods.com/monsterhunterwilds/mods/93)﻿をインストールする﻿
-2. [Releases﻿﻿](https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.7.0)タブからこのMODをダウンロードする
+2. [Releases﻿﻿](https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v1.4.0)タブからこのMODをダウンロードする
 3. zipファイルからこのMODを解凍する
 4. 「reframework」フォルダをモンスターハンターワイルドのルートディレクトリにコピーします
     例：Steamユーザーの場合、`C:\Program Files (x86)\Steam\steamapps\common\MonsterHunterWilds\`になります
