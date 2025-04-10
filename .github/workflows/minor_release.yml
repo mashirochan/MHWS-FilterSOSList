@@ -53,7 +53,10 @@ jobs:
         # Extract the download count from the response
         DOWNLOADS=$(echo "$RESPONSE" | jq '.mod_downloads')
         
-        # Format the download count with commas (e.g., 3539 -> 3,539)
+        # Set the locale to use commas as the thousands separator
+        export LC_NUMERIC="en_US.UTF-8"
+        
+        # Format the download count with commas
         FORMATTED_DOWNLOADS=$(printf "%'d" $DOWNLOADS)
 
         echo "Current download count: $FORMATTED_DOWNLOADS"
