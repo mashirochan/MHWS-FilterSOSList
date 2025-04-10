@@ -42,12 +42,30 @@ jobs:
         echo "zipname=$zipname" >> $GITHUB_OUTPUT
         echo "releasename=$releasename" >> $GITHUB_OUTPUT
 
-    - name: Commit updated version
+    - name: Get Nexus Mod Stats
+      id: nexus_stats
+      run: |
+        MOD_ID=1220  # Replace with your mod's Nexus Mod ID
+        GAME_ID=6993  # Game ID for Monster Hunter World
+        API_KEY=${{ secrets.NEXUS_API_KEY }}  # Store your Nexus API key in GitHub secrets
+        DOWNLOADS=$(curl -s -H "Authorization: Bearer $API_KEY" "https://api.nexusmods.com/v1/games/$GAME_ID/mods/$MOD_ID/stats.json" | jq '.stats.downloads')
+
+        echo "Current download count: $DOWNLOADS"
+        echo "downloads=$DOWNLOADS" >> $GITHUB_OUTPUT
+
+    - name: Update README with new version and badges
+      run: |
+        # Update version-related links and badges in README.md
+        sed -i "s|https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v[0-9]*\.[0-9]*\.[0-9]*|https://github.com/mashirochan/MHWS-FilterSOSList/releases/tag/v${{ steps.versioning.outputs.version }}|g" README.md
+        sed -i "s|<img src=\"https://img.shields.io/badge/version-[^\"]*\"|<img src=\"https://img.shields.io/badge/version-${{ steps.versioning.outputs.version }}-ff6262\" alt=\"version\"|g" README.md
+        sed -i "s|<img src=\"https://img.shields.io/badge/downloads-[^\"]*\"|<img src=\"https://img.shields.io/badge/downloads-${{ steps.nexus_stats.outputs.downloads }}-ff6262\" alt=\"downloads\"|g" README.md
+
+    - name: Commit updated version and README
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
-        git add modinfo.ini
-        git commit -m "Bump version to ${{ steps.versioning.outputs.version }}"
+        git add modinfo.ini README.md
+        git commit -m "Bump version to ${{ steps.versioning.outputs.version }} and update README"
         git push
 
     - name: Zip selected files
